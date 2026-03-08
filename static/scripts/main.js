@@ -558,9 +558,39 @@ const initScrollAnimations = () => {
     });
 };
 
+const initVideoHandler = () => {
+    const playButton = document.getElementById('play-button-trigger');
+    const uiOverlay = document.getElementById('video-ui-overlay');
+    const videoSlot = document.getElementById('video-iframe-slot');
+
+    if (playButton && videoSlot) {
+        playButton.addEventListener('click', function() {
+            videoSlot.innerHTML = `
+                <iframe
+                    width="100%"
+                    height="100%"
+                    src="https://www.youtube.com/embed/034nVaQUyME?autoplay=1&rel=0&modestbranding=1"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>`;
+
+            if (uiOverlay) {
+                gsap.to(uiOverlay, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => uiOverlay.remove()
+                });
+            }
+        });
+    }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     initMarquee();
     initScrollAnimations();
+    initVideoHandler();
 
     const header = document.querySelector(".site-header");
     if (header) {
