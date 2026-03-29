@@ -111,14 +111,14 @@
   justify-content: center;
   gap: 34px;
   transform-origin: center center;
+  /* Scale smoothly with container inline size:
+     - 100cqi = container width
+     - 980px = baseline width
+     - min scale = 0.2 (matches previous <=196px rule)
+     - max scale = 1 (no upscaling above baseline) */
+  --browser-scale: clamp(0.2, calc(100cqi / 980), 1);
   scale: var(--browser-scale);
   transition: scale 0.08s linear;
-
-  @for $i from 1 through 15 {
-    $w: 980 - ($i * 50);
-    @container (width <= #{$w}px) { --browser-scale: calc(#{$w} / 980); }
-  }
-  @container (width <= 196px) { --browser-scale: 0.2; }
 }
 
 .browser-body::before {
